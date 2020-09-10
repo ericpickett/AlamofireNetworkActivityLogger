@@ -190,7 +190,7 @@ public class NetworkActivityLogger {
                             NSLog(prettyString)
                         }
                     } catch {
-                        if let string = String(data: data, encoding: String.Encoding.utf8.rawValue) {
+						if let string = String(data: data, encoding: .utf8) {
                             NSLog(string)
                         }
                     }
