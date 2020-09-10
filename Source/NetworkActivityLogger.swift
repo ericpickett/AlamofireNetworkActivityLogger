@@ -124,13 +124,13 @@ public class NetworkActivityLogger {
                 
                 self.logDivider()
                 
-                print("\(httpMethod) '\(requestURL.absoluteString)':")
+                NSLog("\(httpMethod) '\(requestURL.absoluteString)':")
                 
-                print("cURL:\n\(cURL)")
+                NSLog("cURL:\n\(cURL)")
             case .info:
                 self.logDivider()
                 
-                print("\(httpMethod) '\(requestURL.absoluteString)'")
+                NSLog("\(httpMethod) '\(requestURL.absoluteString)'")
             default:
                 break
             }
@@ -160,8 +160,8 @@ public class NetworkActivityLogger {
                 case .debug, .info, .warn, .error:
                     self.logDivider()
                     
-                    print("[Error] \(httpMethod) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
-                    print(error)
+                    NSLog("[Error] \(httpMethod) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
+                    NSLog(error)
                 default:
                     break
                 }
@@ -174,30 +174,30 @@ public class NetworkActivityLogger {
                 case .debug:
                     self.logDivider()
                     
-                    print("\(String(response.statusCode)) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
+                    NSLog("\(String(response.statusCode)) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
                     
                     self.logHeaders(headers: response.allHeaderFields)
                     
                     guard let data = dataRequest.data else { break }
                     
-                    print("Body:")
+                    NSLog("Body:")
                     
                     do {
                         let jsonObject = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                        let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
+                        let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyNSLoged)
                         
                         if let prettyString = String(data: prettyData, encoding: .utf8) {
-                            print(prettyString)
+                            NSLog(prettyString)
                         }
                     } catch {
                         if let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                            print(string)
+                            NSLog(string)
                         }
                     }
                 case .info:
                     self.logDivider()
                     
-                    print("\(String(response.statusCode)) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]")
+                    NSLog("\(String(response.statusCode)) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]")
                 default:
                     break
                 }
@@ -209,14 +209,14 @@ public class NetworkActivityLogger {
 
 private extension NetworkActivityLogger {
     func logDivider() {
-        print("---------------------")
+        NSLog("---------------------")
     }
     
     func logHeaders(headers: [AnyHashable : Any]) {
-        print("Headers: [")
+        NSLog("Headers: [")
         for (key, value) in headers {
-            print("  \(key): \(value)")
+            NSLog("  \(key): \(value)")
         }
-        print("]")
+        NSLog("]")
     }
 }
