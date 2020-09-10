@@ -161,7 +161,7 @@ public class NetworkActivityLogger {
                     self.logDivider()
                     
                     NSLog("[Error] \(httpMethod) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
-                    NSLog(error)
+                    NSLog("\(error)")
                 default:
                     break
                 }
@@ -184,13 +184,13 @@ public class NetworkActivityLogger {
                     
                     do {
                         let jsonObject = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                        let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyNSLoged)
+                        let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
                         
                         if let prettyString = String(data: prettyData, encoding: .utf8) {
                             NSLog(prettyString)
                         }
                     } catch {
-                        if let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        if let string = String(data: data, encoding: String.Encoding.utf8.rawValue) {
                             NSLog(string)
                         }
                     }
